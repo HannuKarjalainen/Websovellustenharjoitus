@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isompi vai pienempi arvauspeli</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 40% 60%; /* Asetetaan sarakkeet suhteelliseen leveyteen */
+            grid-gap: 20px; /* Lisätään väliä sarakkeiden välille */
+            padding: 20px;
+        }
+
+        .main-content {
+            margin: 0;
+            padding: 0;
+            width: 100vw; /* Koko näytön leveys */
+            height: 100vh; /* Koko näytön korkeus */
+            overflow: hidden; /* Estä ylimääräinen rullaus */
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-gap: 1px;
+        }
+
+        .image-grid img {
+            width: auto;
+            height: 50%;
+            max-height: 300px; /*maksimikorkeus tässä*/
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+        <h1>Isompi vai pienempi arvauspeli</h1>
+            <div>
+            <h2>Nostettu kortti</h2>
+            <img id="currentCardImage" src="/images/placeholder.jpg" alt="Nostettu kortti" style="width: auto; height: 150px;">
+            </div>
+        <div>
+            <h2>Edellinen kortti</h2>
+            <img id="previousCardImage" src="/images/placeholder.jpg" alt="Edellinen kortti" style="width: auto; height: 150px;">
+        </div>
+        <div>
+            <h2>Oikein menneet arvaukset</h2>
+            <img id="guessCount" src="/images/0.jpg" alt="Oikeat" style="width: auto; height: 150px;">
+        </div>
+        <div>
+            <button onclick="startGame()">Aloita peli</button>
+            <button id="pienempiButton" onclick="makeGuess('pienempi')" disabled>Pienempi</button>
+            <button id="isompiButton" onclick="makeGuess('isompi')" disabled>Isompi</button>
+            <button id="isompiButton" onclick="getGuide()">Ohjeet</button>
+        </div>
+        </div>
+        <div class="image-grid" id="cardGrid"></div>
+        </div>
+    <script>
+        const baseUrl = 'http://localhost:8080'; 
+
+        async function startGame() {
+
+            const response = await fetch(baseUrl + '/start');
+            const message = await response.text();
+            currentCardImage.src = '/images/placeholder.jpg';
+            //alert(message);
+            updateCardImages();
+            guessCount.src = '/images/0.jpg';
+            createImageGrid(); 
+            document.getElementById('isompiButton').removeAttribute('disabled');
+            document.getElementById('pienempiButton').removeAttribute('disabled');
+        }
+
+        async function createImageGrid() {
+            const cardGrid = document.getElementById('cardGrid');
+            cardGrid.innerHTML = '<h2>Pakassa kortteja:</h2></br>'; // Tyhjennä gridi
+
+            // Korttien määrittely
+            const suits = ['Hertta', 'Risti', 'Ruutu', 'Pata'];
+            const values = ['Assa', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jatka', 'Rouva', 'Kuningas'];
+
+            // Lisää kuvat gridiin
+            for (const suit of suits) {
+                for (const value of values) {
+                    const cardImage = document.createElement('img');
+                    cardImage.src = '/images/' + suit + ' ' + value + '.jpg';
+                    cardImage.classList.add('card-image');
+                    cardGrid.appendChild(cardImage);
+                }
+            }
+        }
+
+        async function makeGuess(guess) {
+            const response = await fetch(baseUrl + '/guess', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: guess
+            });
+            const result = await response.text();
+            if (result.startsWith("Peli")) {
+                // Tässä vaiheessa voit tehdä tarvittavat toimenpiteet, kun peli on ohi
+                document.getElementById('isompiButton').setAttribute('disabled', 'disabled');
+                document.getElementById('pienempiButton').setAttribute('disabled', 'disabled');
+                currentCardImage.src = '/images/placeholder.jpg';
+                previousCardImage.src = '/images/placeholder.jpg';
+                alert("Peli on nyt ohi, aloita uusi peli koittaaksesi voittaa tuloksesi!");
+                console.log("Peli on päättynyt:", result);
+            } else {
+                // Jos peli ei ole ohi
+                updateCardImages();
+                updateGuessCount();
+            }
+            //alert(result);
+
+        }
+
+        async function updateCardImages() {
+            const previousCardImage = document.getElementById('previousCardImage');
+            const currentCardImage = document.getElementById('currentCardImage');
+
+            // Laitetaan vanha kuva edelliseksi, kun uusi kuva ladataan
+            previousCardImage.src = currentCardImage.src;
+            
+            // Haetaan nykyinen kortti palvelimelta
+            const currentCardResponse = await fetch(baseUrl + '/currentCard');
+            const currentCardValue = await currentCardResponse.text();
+ 
+            // Tarkista, onko nykyinen kortti jo näytöllä gridissä
+            const cardOnGrid = document.querySelector('img[src$="' + currentCardValue + '.jpg"]');
+
+            // Jos kortti on gridissä, poista se
+            if (cardOnGrid) {
+                cardOnGrid.remove();
+            } else {
+                currentCardValue = "placeholder";
+            }
+            
+            currentCardImage.src = '/images/' + currentCardValue + '.jpg';
+            
+        }
+
+        async function updateGuessCount() {
+            const guessCountElement = document.getElementById('guessCount');
+
+            // Haetaan nykyinen oikeiden vastausten määrä palvelimelta
+            const response = await fetch(baseUrl + '/correctGuesses');
+            const count = await response.text();
+            //alert(count);
+            // Päivitetään laskuri
+            guessCountElement.src = '/images/' +count+'.jpg';
+        }
+
+        async function getGuide() {
+            //haetaan ohjeet
+            const response = await fetch(baseUrl + '/guide');
+            const guide = await response.text();
+            alert(guide);
+        }
+
+    </script>
+</body>
+</html>
