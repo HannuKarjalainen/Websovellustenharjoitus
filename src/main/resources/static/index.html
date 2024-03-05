@@ -130,9 +130,10 @@
             // Haetaan nykyinen kortti palvelimelta
             const currentCardResponse = await fetch(baseUrl + '/currentCard');
             const currentCardValue = await currentCardResponse.text();
+            //alert(currentCardValue);
  
             // Tarkista, onko nykyinen kortti jo näytöllä gridissä
-            const cardOnGrid = document.querySelector('img[src$="' + currentCardValue + '.jpg"]');
+            const cardOnGrid = document.querySelector('.image-grid img[src$="' + currentCardValue + '.jpg"]');
 
             // Jos kortti on gridissä, poista se
             if (cardOnGrid) {
