@@ -3,7 +3,7 @@ Web-sovellusten perusteet harjoitustyö
 
 **Kuvaus**
 
-Sivusto joka sisältää javascript ja html -forntendiä ja javalla toteutetun springboot -backendiä käyttävän kortinarvauspelin.
+Sivusto joka sisältää javascript ja html -frontendin ja javalla toteutetun springboot -backendiä käyttävän kortinarvauspelin.
 Lisäksi sivustolla on esittelyvideo ja backendissä olevat koodit lyhyesti aukaistuna.
 
 **Asennusohje**
