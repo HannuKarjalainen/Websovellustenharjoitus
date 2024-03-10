@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isompi vai pienempi arvauspeli-aloitussivu</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .otsikko {
+            text-align: center;
+            justify-content: center;
+            padding: 50px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 50% 50%; /* Asetetaan sarakkeet suhteelliseen leveyteen */
+            grid-gap: 50px; /* Lisätään väliä sarakkeiden välille */
+            padding: 50px;
+            
+        }
+
+        .left-content {
+            margin: 10px;
+            padding: 10px;
+            width: 100%; /* Koko näytön leveys */
+            align-items: center;
+            text-align: left;
+            justify-content: center;
+            overflow: hidden; /* Estä ylimääräinen rullaus */
+            padding: 50px;
+        }
+        .right-content {
+            margin: 10px;
+            padding: 10px;
+            width: 100%; /* Koko näytön leveys */
+            align-items: start;
+            text-align: left;
+            justify-content: center;
+            overflow: hidden; /* Estä ylimääräinen rullaus */
+            padding: 50px;
+        }
+    
+        @media only screen and (max-width: 1800px) {
+            .container {
+                display: grid;
+            }
+        }
+        @media only screen and (max-width: 1400px) {
+            .container {
+                display: block;
+            }
+        }
+
+    </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Koti</a></li>
+                <li><a href="./korttipeli.html">Korttipeli</a></li>
+                <li><a href="./highscore.html">Highscore</a></li>
+                <li><a href="./koodit.html">Koodit</a></li>
+            </ul>
+        </nav>
+        <div class="otsikko">
+            <h1>Maven-projekti Spring Boot -backendissä</h1>
+        </div>
+        <div class="container">
+            <div class="left-content">
+                <h2>BigorsmallApplication.java</h2>
+                <br>
+                <p>BigorsmallApplication -luokka toimii sovelluksen pääluokkana, 
+                    ja se on vastuussa sovelluksen käynnistämisestä. @SpringBootApplication -annotaatio osoittaa Spring Boot -sovelluksen pääluokan, 
+                    ja se yhdistää useita muita annotaatioita, jotka määrittävät automaattisesti sovelluksen kokoonpanon, mukaan lukien komponenttien 
+                    skannauksen ja automaattisen konfiguroinnin.</p>
+                    <br>
+                <p>main-metodi on sovelluksen aloituspiste, ja se kutsuu SpringApplication.run -metodia käynnistääkseen Spring Boot -sovelluksen. 
+                    Tämä metodi ottaa parametreinaan sovelluksen pääluokan (tässä tapauksessa BigorsmallApplication.class) ja komentoriviltä saadut argumentit.
+                <p>
+            </div>
+            <div class="right-content">
+                <img src="./images/BigorsmallApplication.jpg">
+            </div>
+            <div class="left-content">                    
+                <img src="./images/CardGameController.jpg">
+            </div>
+            <div class="right-content">
+                <h2>CardGameController.java</h2>
+                <br>
+                <p>Tämä on Java-luokka nimeltään CardGameController, joka toimii ohjaimena CardGame-sovelluksessa. Se on vastuussa reittien määrittelystä ja pyyntöjen käsittelystä sovelluksessa. Tässä on lyhyt selitys jokaisesta metodista:</p>
+                <br>
+                <ul>
+                    <li> <b>index():</b> Palauttaa aloitussivun HTML-muodossa.</li>
+                    <li><b>drawCard():</b> Vetää kortin pakasta ja palauttaa sen. Ilmoittaa, jos pakka on tyhjä.</li>
+                    <li><b>makeGuess(String guess):</b> Ottaa vastaan pelaajan arvauksen ja vertaa sitä seuraavaan korttiin. Palauttaa viestin arvauksen oikeellisuudesta ja näyttää seuraavan kortin. Pidetään kirjaa oikeista arvauksista ja niiden määrästä.</li>
+                    <li><b>startGame():</b> Aloittaa uuden pelin luomalla täyden korttipakan ja sekoittamalla sen. Palauttaa viestin pelin aloittamisesta ja näyttää ensimmäisen kortin.</li>
+                    <li><b>getGuide():</b> Palauttaa ohjeet pelin pelaamiseen.</li>
+                    <li><b>getCurrentCard():</b> Palauttaa nykyisen kortin.</li>
+                    <li><b>getCorrectGuesses():</b> Palauttaa oikeiden arvausten määrän.</li>
+                </ul>
+            </div>
+            <div class="left-content">                    
+                <h2>CardGameConfig.java</h2>
+                <br>
+                <p>Tämä Java-luokka, nimeltään CardGameConfig, on Spring-sovelluksen asetuskonfiguraatio. Se käyttää Springin kontekstiriippuvaista injektiota tarjoamaan CardGame-luokan olion sovelluksen komponenttien käyttöön.</p>
+                <br>
+                <p>Luokka sisältää seuraavat ominaisuudet:</p>
+                <br>
+                <ol>
+                    <li><b>cardGame-metodi:</b> Tämä metodi on Spring Bean -komponentti, joka tuottaa CardGame-olion. Se on merkitty @Bean-annotaatiolla, mikä tarkoittaa, että se rekisteröidään Spring-sovelluksen kontekstiin ja on käytettävissä injektiolla muihin komponentteihin.</li>
+                </ol>
+                <br>
+                <p>Tämä luokka mahdollistaa CardGame-olion helpon käytön Spring-sovelluksessa ja tarjoaa keskitetyn paikan luoda ja hallita kyseistä oliota.</p>
+            </div>
+            <div class="right-content">
+                <img src="./images/CardGameConfig.jpg">
+            </div>
+            <div class="left-content">                    
+                <img src="./images/Cardgame.jpg">
+            </div>
+            <div class="right-content">
+                <h2>CardGame.java</h2>
+                <br>
+                <p>Tämä Java-luokka, nimeltään CardGame, on osa Card Game -sovellusta. Luokka vastaa korttipelin logiikasta, kuten korttien nostamisesta, arvausten tekemisestä ja pelin aloittamisesta.</p>
+                <br>
+                <p>Luokka sisältää seuraavat ominaisuudet:</p>
+                <br>
+                <ul>
+                    <li><b>deck:</b> Deck-olio, joka edustaa korttipakkaa.</li>
+                    <li><b>currentCard:</b> Merkkijono, joka kuvaa pelissä tällä hetkellä olevaa korttia.</li>
+                    <li><b>correctGuesses:</b> Kokonaisluku, joka pitää kirjaa pelaajan oikeista arvauksista.</li>
+                    <li><b>cardValues:</b> Map-olio, joka liittää korttien arvot niiden nimien perusteella.</li>
+                </ul>
+                <br>
+                <p>Luokka sisältää seuraavat metodit:</p>
+                <br>
+                <ul>
+                    <li><b>initializeCardValues:</b> Alustaa korttien arvot ja tallentaa ne cardValues-karttaan.</li>
+                    <li><b>drawCard:</b> Nostaa kortin pakan päältä ja päivittää currentCard-muuttujan.</li>
+                    <li><b>makeGuess:</b> Ottaa vastaan pelaajan arvauksen ja vertaa sitä seuraavaan korttiin, päivittäen samalla correctGuesses-muuttujan.</li>
+                    <li><b>startGame:</b> Alustaa uuden pelin tyhjentämällä pakan, sekoittamalla sen ja nostamalla ensimmäisen kortin.</li>
+                    <li><b>getGuide:</b> Palauttaa peliohjeet.</li>
+                    <li><b>getCurrentCard:</b> Palauttaa pelin nykyisen kortin.</li>
+                    <li><b>getCorrectGuesses:</b> Palauttaa oikein arvattujen lukumäärän.</li>
+                </ul>
+            </div>
+            <div class="left-content">                    
+                <h2>Deck.java</h2>
+                <br>
+                <p>Tämä Deck-luokka vastaa korttipakan luomisesta, sekoittamisesta, kortin nostamisesta ja pakassa olevien korttien tarkistamisesta.</p>
+                <br>
+                <p>Luokka sisältää seuraavat ominaisuudet:</p>
+                <br>
+                <ul>
+                    <li> <b>generateDeck():</b> Metodi luo täyden korttipakan, joka koostuu kaikista neljästä maasta (Hertta, Ruutu, Risti, Pata) ja jokaisesta arvosta (2-10, Jatka, Rouva, Kuningas, Assa).</li>
+                    <li><b>shuffleDeck():</b> Metodi sekoittaa korttipakan.</li>
+                    <li><b>drawCard():</b> Metodi nostaa kortin pakasta ja palauttaa sen. Jos pakka on tyhjä, palautetaan ilmoitus "Pakka tyhjä."</li>
+                    <li><b>startGame():</b> Aloittaa uuden pelin luomalla täyden korttipakan ja sekoittamalla sen. Palauttaa viestin pelin aloittamisesta ja näyttää ensimmäisen kortin.</li>
+                    <li><b>clear():</b> Metodi tyhjentää korttipakan.</li>
+                    <li><b>isEmpty():</b> Metodi tarkistaa, onko korttipakka tyhjä.</li>
+                </ul>
+            </div>
+            <div class="right-content">
+                <img src="./images/Deck.jpg">
+            </div>
+        </div>
+        <footer>
+            <p>Web-sovellusten perusteet IN00DL12-3003 (2024) (c) Hannu Karjalainen </p>
+        </footer>
+</body>
+</html>

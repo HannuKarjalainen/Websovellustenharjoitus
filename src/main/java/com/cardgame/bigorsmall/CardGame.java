@@ -89,7 +89,7 @@ public class CardGame {
     }
 
     public String getGuide() {
-        return "Arvaa onko seuraava kortti isompi vai pienempi kuin nykyinen. Oikea arvaus, sama numero ja ässä antavat pisteen. Ässän päälle käy mikä vain.";
+        return "Arvaa onko seuraava kortti isompi vai pienempi kuin nykyinen. Oikea arvaus, sama numero ja ässä antavat pisteen. Ässän päälle käy mikä vain. Jos haluat koittaa tallentaa pisteesi valitse pakan loputtua vielä kerran isompi tai pienempi. Highscore lista pitää muistissa 10 parasta tulosta";
     }
 
     public String getCurrentCard() {

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isompi vai pienempi arvauspeli</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 40% 60%; /* Asetetaan sarakkeet suhteelliseen leveyteen */
+            grid-gap: 5px; /* Lisätään väliä sarakkeiden välille */
+            padding: 5px;
+            
+        }
+
+        .main-content {
+            margin: 10px;
+            padding: 10px;
+            width: 40%; /* Koko näytön leveys */
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            overflow: hidden; /* Estä ylimääräinen rullaus */
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            grid-gap: 5px;
+            padding: 5px;
+            justify-content: start;
+        }
+
+        .image-grid img {
+            width: auto;
+            height: 50%;
+            max-height: 220px; /*maksimikorkeus tässä*/
+            
+        }
+        @media only screen and (max-width: 1800px) {
+            .container {
+                display: grid;
+            }
+            .image-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+        @media only screen and (max-width: 1400px) {
+            .container {
+                display: grid;
+            }
+            .image-grid {
+                grid-template-columns: repeat(7, 1fr);
+            }
+        }
+        @media only screen and (max-width: 1200px) {
+            .container {
+                display: block;
+            }
+            .image-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .container {
+                display: block;
+            }
+            .image-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }  
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                display: block;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media only screen and (max-width: 414px) {
+            .container {
+                display: block;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }  
+
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Koti</a></li>
+            <li><a href="./korttipeli.html">Korttipeli</a></li>
+            <li><a href="./highscore.html">Highscore</a></li>
+            <li><a href="./koodit.html">Koodit</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="main-content">
+        <h1>Isompi vai pienempi arvauspeli</h1>
+            <div>
+            <h2>Nostettu kortti</h2>
+            <img id="currentCardImage" src="/images/placeholder.jpg" alt="Nostettu kortti" style="width: auto; height: 150px;">
+            </div>
+        <div>
+            <h2>Edellinen kortti</h2>
+            <img id="previousCardImage" src="/images/placeholder.jpg" alt="Edellinen kortti" style="width: auto; height: 150px;">
+        </div>
+        <div>
+            <h2>Oikein menneet arvaukset</h2>
+            <img id="guessCount" src="/images/0.jpg" alt="Oikeat" style="width: auto; height: 150px;">
+        </div>
+        <div>
+            <button onclick="startGame()">Aloita peli</button>
+            <button id="pienempiButton" onclick="makeGuess('pienempi')" disabled>Pienempi</button>
+            <button id="isompiButton" onclick="makeGuess('isompi')" disabled>Isompi</button>
+            <button id="isompiButton" onclick="getGuide()">Ohjeet</button>
+        </div>
+    </div>
+    <div class="image-grid" id="cardGrid"></div>
+    </div>
+    <footer>
+        <p>Web-sovellusten perusteet IN00DL12-3003 (2024) (c) Hannu Karjalainen </p>
+    </footer>
+    <script>
+        const baseUrl = 'http://localhost:8080'; 
+
+        async function startGame() {
+
+            const response = await fetch(baseUrl + '/start');
+            const message = await response.text();
+            currentCardImage.src = '/images/placeholder.jpg';
+            //alert(message);
+            updateCardImages();
+            guessCount.src = '/images/0.jpg';
+            createImageGrid(); 
+            document.getElementById('isompiButton').removeAttribute('disabled');
+            document.getElementById('pienempiButton').removeAttribute('disabled');
+        }
+
+        async function createImageGrid() {
+            const cardGrid = document.getElementById('cardGrid');
+            cardGrid.innerHTML = ''; // Tyhjennä gridi
+
+            // Lisää otsikko "Pakassa kortteja" ennen gridiä
+            const gridTitle = document.createElement('h2');
+            gridTitle.textContent = 'Pakassa kortteja:';
+            cardGrid.appendChild(gridTitle);
+
+            // Korttien määrittely
+            const suits = ['Hertta', 'Risti', 'Ruutu', 'Pata'];
+            const values = ['Assa', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jatka', 'Rouva', 'Kuningas'];
+
+            // Lisää kuvat gridiin
+            for (const suit of suits) {
+                for (const value of values) {
+                    const cardImage = document.createElement('img');
+                    cardImage.src = '/images/' + suit + ' ' + value + '.jpg';
+                    cardImage.classList.add('card-image');
+                    cardGrid.appendChild(cardImage);
+                }
+            }
+        }
+
+        async function makeGuess(guess) {
+            const response = await fetch(baseUrl + '/guess', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: guess
+            });
+            const result = await response.text();
+            if (result.startsWith("Peli")) {
+                // Tässä vaiheessa voit tehdä tarvittavat toimenpiteet, kun peli on ohi
+                document.getElementById('isompiButton').setAttribute('disabled', 'disabled');
+                document.getElementById('pienempiButton').setAttribute('disabled', 'disabled');
+                currentCardImage.src = '/images/placeholder.jpg';
+                previousCardImage.src = '/images/placeholder.jpg';
+                alert("Peli on nyt ohi, aloita uusi peli koittaaksesi voittaa tuloksesi!");
+                var imageUrl = document.getElementById('guessCount').src;
+                var trimmedImageUrl = imageUrl.substring(imageUrl.lastIndexOf('/') + 1).replace('.jpg', ''); // Trimmaa kuvatiedoston polku
+                saveScore(trimmedImageUrl);
+                console.log("Peli on päättynyt:", result);
+            } else {
+                // Jos peli ei ole ohi
+                updateCardImages();
+                updateGuessCount();
+            }
+            //alert(result);
+
+        }
+
+        async function updateCardImages() {
+            const previousCardImage = document.getElementById('previousCardImage');
+            const currentCardImage = document.getElementById('currentCardImage');
+
+            // Laitetaan vanha kuva edelliseksi, kun uusi kuva ladataan
+            previousCardImage.src = currentCardImage.src;
+            
+            // Haetaan nykyinen kortti palvelimelta
+            const currentCardResponse = await fetch(baseUrl + '/currentCard');
+            const currentCardValue = await currentCardResponse.text();
+            //alert(currentCardValue);
+ 
+            // Tarkista, onko nykyinen kortti jo näytöllä gridissä
+            const cardOnGrid = document.querySelector('.image-grid img[src$="' + currentCardValue + '.jpg"]');
+
+            // Jos kortti on gridissä, poista se
+            if (cardOnGrid) {
+                cardOnGrid.remove();
+            } else {
+                currentCardValue = "placeholder";
+            }
+            
+            currentCardImage.src = '/images/' + currentCardValue + '.jpg';
+            
+        }
+
+        async function updateGuessCount() {
+            const guessCountElement = document.getElementById('guessCount');
+
+            // Haetaan nykyinen oikeiden vastausten määrä palvelimelta
+            const response = await fetch(baseUrl + '/correctGuesses');
+            const count = await response.text();
+            //alert(count);
+            // Päivitetään laskuri
+            guessCountElement.src = '/images/' +count+'.jpg';
+        }
+
+        async function getGuide() {
+            //haetaan ohjeet
+            const response = await fetch(baseUrl + '/guide');
+            const guide = await response.text();
+            alert(guide);
+        }
+        
+        
+        async function saveScore(imageUrl) {
+        // Tallenna uusi tulos Local Storageen ja pidä vain 10 parasta
+
+            var scores = JSON.parse(localStorage.getItem('scores')) || [];
+            scores.push({ score: parseInt(imageUrl), timestamp: formatDate(new Date())});
+
+            // Järjestä pisteiden ja aikaleiman perusteella
+            scores.sort((a, b) => {
+                // Ensiksi tarkista pisteet
+                if (a.score !== b.score) {
+                    return b.score - a.score; // Suurimmasta pienimpään
+                } else {
+                // Jos pisteet ovat samat, järjestä aikaleiman mukaan
+                    return new Date(b.timestamp) - new Date(a.timestamp); // Uusimmasta vanhimpaan
+                }
+            });
+
+            // Pidä vain 10 parasta tulosta
+            scores = scores.slice(0, 10);
+            console.log(scores);
+            localStorage.setItem('scores', JSON.stringify(scores));
+        }
+
+        function formatDate(date) {
+            //aikaleiman muotoilu
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+
+            // Lisää etunollat tarvittaessa
+            if (day < 10) {
+                day = '0' + day;
+            }
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (hours < 10) {
+                hours = '0' + hours;
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+
+            return day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
+        }
+    </script>
+</body>
+</html>
