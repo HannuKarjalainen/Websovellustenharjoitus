@@ -114,11 +114,6 @@ nav li a:hover {
     font-weight: bold;
 }
 
-aside {
-    padding: var(--general-padding);
-    padding-top: calc(var(--general-padding)*1.5);
-}
-
 footer {
     background-color: var(--dark-background-color);
     font-family: Arial, sans-serif, Helvetica;
@@ -141,34 +136,39 @@ footer p {
     justify-content: center;
 }
 
-@media only screen and (max-width: 1200px) {
-    div#content {
-        flex-direction: column;
+@media only screen and (max-width: 1080px) {
+    nav {
+        display: inherit;
+        align-items: center;
+        border-top: 1px solid var(--dark-foreground-color);
+        border-bottom: 1px solid var(--dark-foreground-color);
+        height: 50px;
+        width: auto;
     }
-
-    div#content section {
-        width: 100vw;
-        flex-direction: row;
+    
+    nav ul {
+        padding-left: 1px;
+        background-color: #161515;
     }
-
-    div#content aside {
-        width: 100vw;
-        padding-top: var(--general-padding);
-        padding-left: calc(var(--general-padding)/2);
+    
+    nav li {
+        display: inline-block;
+        margin-right: var(--general-margin);
+        color: #FFF;
+        background-color: #161515;
     }
-
-    article {
-        flex: 50%;
+    
+    nav li a {
+        font-family: Arial, sans-serif, Helvetica;
+        display: inline-block;
+        color: #FFF;
+        text-decoration: none;
+        padding: 1px 1px;
     }
-
-    article div img {
-        height: 350px;
-    }
-}
-
-@media only screen and (max-width: 992px) {
-    div#content section {
-        width: 100vw;
-        flex-direction: column;
+    
+    nav li a:hover {
+        background-color: #111;
+        color: #FFF;
+        font-weight: bold;
     }
 }

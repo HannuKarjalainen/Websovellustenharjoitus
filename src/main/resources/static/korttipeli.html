@@ -62,11 +62,23 @@
                 grid-template-columns: repeat(6, 1fr);
             }
         }
+        
 
         @media only screen and (max-width: 900px) {
             .container {
                 display: block;
             }
+
+            .main-content {
+                margin: 5px;
+                padding: 5px;
+                width: 100%; /* Koko näytön leveys */
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                overflow: hidden; /* Estä ylimääräinen rullaus */
+            }
+
             .image-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
@@ -80,6 +92,16 @@
             .image-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+            .main-content {
+                margin: 5px;
+                padding: 5px;
+                width: 100%; /* Koko näytön leveys */
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                overflow: hidden; /* Estä ylimääräinen rullaus */
+            }
         }
 
         @media only screen and (max-width: 414px) {
@@ -90,9 +112,18 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .main-content {
+                margin: 5px;
+                padding: 5px;
+                width: 100%; /* Koko näytön leveys */
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                overflow: hidden; /* Estä ylimääräinen rullaus */
+            }
+
         }  
-
-
 
     </style>
 </head>
@@ -133,7 +164,7 @@
         <p>Web-sovellusten perusteet IN00DL12-3003 (2024) (c) Hannu Karjalainen </p>
     </footer>
     <script>
-        const baseUrl = 'http://localhost:8080'; 
+        const baseUrl = 'https://bigorsmall-latest.onrender.com';
 
         async function startGame() {
 
