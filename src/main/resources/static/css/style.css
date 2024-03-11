@@ -48,25 +48,6 @@ div#content section {
     flex-wrap: wrap;
 }
 
-div#content aside {
-    width: 20vw;
-}
-
-article {
-    flex: 33.33%;
-}
-
-article div {
-    margin: var(--general-margin);
-    border: 1px solid var(--grey-foreground-color);
-}
-
-article div img {
-    height: 500px;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-}
 
 header {
     display: inherit;
@@ -121,7 +102,6 @@ footer {
     justify-content: center;
     align-items: center;
     height: 50px;
-    width: auto;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -137,6 +117,18 @@ footer p {
 }
 
 @media only screen and (max-width: 1080px) {
+ 
+    h1 {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: small;
+
+
+    }
+    h2 {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: small;
+        
+    }
     nav {
         display: inherit;
         align-items: center;
@@ -153,7 +145,7 @@ footer p {
     
     nav li {
         display: inline-block;
-        margin-right: var(--general-margin);
+        margin-right: 1px;
         color: #FFF;
         background-color: #161515;
     }
@@ -170,5 +162,17 @@ footer p {
         background-color: #111;
         color: #FFF;
         font-weight: bold;
+    }
+    footer {
+        background-color: var(--dark-background-color);
+        font-family: Arial, sans-serif, Helvetica;
+        font-size: 10px;
+        display: inherit;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 100vw;
+        text-align: center;
+        padding: 10px 0; 
     }
 }

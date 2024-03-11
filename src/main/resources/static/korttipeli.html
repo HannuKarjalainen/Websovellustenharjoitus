@@ -38,6 +38,18 @@
             max-height: 220px; /*maksimikorkeus tässä*/
             
         }
+        #currentCardImage {
+            height: 150px;
+            width: auto;
+        }
+        #previousCardImage {
+            height: 150px;
+            width: auto;
+        }
+        #guessCount {
+            height: 150px;
+            width: auto;
+        }   
         @media only screen and (max-width: 1800px) {
             .container {
                 display: grid;
@@ -64,24 +76,35 @@
         }
         
 
-        @media only screen and (max-width: 900px) {
+        @media only screen and (max-width: 1080px) {
             .container {
                 display: block;
-            }
-
-            .main-content {
-                margin: 5px;
-                padding: 5px;
-                width: 100%; /* Koko näytön leveys */
-                align-items: center;
-                text-align: center;
-                justify-content: center;
-                overflow: hidden; /* Estä ylimääräinen rullaus */
             }
 
             .image-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+            .main-content {
+                margin: 10px;
+                padding: 5px;
+                width: 80%; /* Koko näytön leveys */
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                overflow: auto; /* Estä ylimääräinen rullaus */
+            }
+            #currentCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #previousCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #guessCount {
+                height: 100px;
+                width: auto;
+            }   
         }  
 
         @media only screen and (max-width: 600px) {
@@ -92,16 +115,27 @@
             .image-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
-
             .main-content {
-                margin: 5px;
+                margin: 10px;
                 padding: 5px;
-                width: 100%; /* Koko näytön leveys */
+                width: 40%; 
                 align-items: center;
                 text-align: center;
                 justify-content: center;
-                overflow: hidden; /* Estä ylimääräinen rullaus */
+                overflow: auto; /* Estä ylimääräinen rullaus */
             }
+            #currentCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #previousCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #guessCount {
+                height: 100px;
+                width: auto;
+            }   
         }
 
         @media only screen and (max-width: 414px) {
@@ -112,17 +146,27 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
             .main-content {
-                margin: 5px;
+                margin: 10px;
                 padding: 5px;
-                width: 100%; /* Koko näytön leveys */
+                width: 80%; /* Koko näytön leveys */
                 align-items: center;
                 text-align: center;
                 justify-content: center;
-                overflow: hidden; /* Estä ylimääräinen rullaus */
+                overflow: auto; /* Estä ylimääräinen rullaus */
             }
-
+            #currentCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #previousCardImage {
+                height: 100px;
+                width: auto;
+            }
+            #guessCount {
+                height: 100px;
+                width: auto;
+            }   
         }  
 
     </style>
@@ -141,15 +185,15 @@
         <h1>Isompi vai pienempi arvauspeli</h1>
             <div>
             <h2>Nostettu kortti</h2>
-            <img id="currentCardImage" src="/images/placeholder.jpg" alt="Nostettu kortti" style="width: auto; height: 150px;">
+            <img id="currentCardImage" src="/images/placeholder.jpg" alt="Nostettu kortti">
             </div>
         <div>
             <h2>Edellinen kortti</h2>
-            <img id="previousCardImage" src="/images/placeholder.jpg" alt="Edellinen kortti" style="width: auto; height: 150px;">
+            <img id="previousCardImage" src="/images/placeholder.jpg" alt="Edellinen kortti">
         </div>
         <div>
             <h2>Oikein menneet arvaukset</h2>
-            <img id="guessCount" src="/images/0.jpg" alt="Oikeat" style="width: auto; height: 150px;">
+            <img id="guessCount" src="/images/0.jpg" alt="Oikeat">
         </div>
         <div>
             <button onclick="startGame()">Aloita peli</button>
@@ -164,7 +208,9 @@
         <p>Web-sovellusten perusteet IN00DL12-3003 (2024) (c) Hannu Karjalainen </p>
     </footer>
     <script>
-        const baseUrl = 'https://bigorsmall-latest.onrender.com';
+        //const baseUrl = 'https://bigorsmall-latest.onrender.com';
+        
+        const baseUrl = 'http://localhost:8080'; 
 
         async function startGame() {
 

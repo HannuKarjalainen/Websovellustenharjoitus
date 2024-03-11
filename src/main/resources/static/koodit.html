@@ -21,43 +21,59 @@
 
         .left-content {
             margin: 10px;
-            padding: 10px;
+            padding: 50px;
             width: 100%; /* Koko näytön leveys */
             align-items: center;
             text-align: left;
             justify-content: center;
             overflow: hidden; /* Estä ylimääräinen rullaus */
-            padding: 50px;
         }
         .right-content {
             margin: 10px;
-            padding: 10px;
+            padding: 50px;
             width: 100%; /* Koko näytön leveys */
             align-items: start;
             text-align: left;
             justify-content: center;
             overflow: hidden; /* Estä ylimääräinen rullaus */
-            padding: 50px;
         }
     
-        @media only screen and (max-width: 1800px) {
-            .container {
-                display: grid;
-            }
-        }
+
         @media only screen and (max-width: 1400px) {
             .container {
                 display: block;
+                padding: 10px;
+            }
+            .left-content {
+                margin: 10px;
+                padding: 10px;
+                width: 100%; /* Koko näytön leveys */
+                align-items: center;
+                text-align: left;
+                justify-content: center;
+                overflow: hidden; /* Estä ylimääräinen rullaus */
+            }
+            .right-content {
+                margin: 10px;
+                padding: 10px;
+                width: 100%; /* Koko näytön leveys */
+                align-items: start;
+                text-align: left;
+                justify-content: center;
+                overflow: hidden; /* Estä ylimääräinen rullaus */
+            }
+            .left-content img {
+                width: 100%; /* Kuvan leveys täyttää containerin leveyden */
+                height: 100%; /* Kuvan korkeus täyttää containerin korkeuden */
+                object-fit: cover; /* Mahdollistaa kuvan skaalaamisen ilman vääristymiä */
+            }
+            .right-content img {
+                width: 100%; /* Kuvan leveys täyttää containerin leveyden */
+                height: 100%; /* Kuvan korkeus täyttää containerin korkeuden */
+                object-fit: cover; /* Mahdollistaa kuvan skaalaamisen ilman vääristymiä */
             }
         }
-        
-        @media only screen and (max-width: 1080px) {
-            body {
-                transform: scale(0.75);
-                transform-origin: left top; /* Asettaa skaalauspisteen vasempaan yläkulmaan */
-                padding: 0.5px
-            }
-        }
+
 
     </style>
     </head>
